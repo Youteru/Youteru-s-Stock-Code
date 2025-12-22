@@ -43,6 +43,19 @@ def binary_max(data, upper_bound):
             left = mid
     mid = (left + right) // 2
     return mid            # 見つからなかった場合
+def compression(data) :
+    V=data.copy()
+    V=sorted(V)
+    last="^o^"
+    E=[]
+    F=[]
+    for i in range(len(V)):
+        if V[i]!=last :
+            E.append(V[i])
+        last=V[i]
+    for i in range(len(V)) :
+        F.append(binary_search(E,data[i]))
+    return  F
 N=int(input())
 A=list(map(int,input().split()))
 Q=int(input())
@@ -52,4 +65,3 @@ for q in range(Q) :
     X=binary_min(A,b)
     Y=binary_max(A,b)
     print(min(abs(A[X]-b),abs(A[Y]-b)))
-    
