@@ -7,6 +7,11 @@ def gcd(a,b) :
     return AMARI[-2]
 def lcm(a,b) :
     return int(a*b/gcd(a,b))
+def HSC(n,p) : #Hyperbola Square Count O(√n)
+    X=0
+    for i in range(1,math.isqrt(n)+1) :
+        X+=(n//i)%p
+    return (2*X-(math.isqrt(n))**2)%p
 A=int(input())
 B=int(input())
 print(gcd(A,B))

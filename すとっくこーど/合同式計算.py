@@ -7,7 +7,9 @@ def Mminus(p,a,b) : #a-b
     return (a-b)%p
 def Mtimes(p,a,b) : #a*b
     return (a*b)%p
-def gcd(a,b) : 
+def gcd(a,b) :
+    a=abs(a)
+    b=abs(b)
     AMARI=[]
     AMARI.append(max([a,b]))
     AMARI.append(min([a,b]))
@@ -19,6 +21,10 @@ def lcm(a,b) :
 def EFA(a,b) : #ax+by=1の解の組を1つ答える
     if a==b :
         return False
+    if a==1 :
+        return [1,0]
+    elif b==1 :
+        return [0,1]
     SYO=[]
     AMARI=[]
     V=[1]
@@ -78,6 +84,24 @@ def Mfact(p,a) :
     for i in range(1,a+1) :
         ans=(ans*i)%p
     return ans
+#aCb計算パート
+M=10
+p=998244353
+t=1
+FP=[0 for i in range(M)] # i番目はi!%p
+FI=[0 for i in range(M)] # i番目は(1/i!)%p
+for i in range(1,M+1) :
+    t=(t*i)%p
+    FP[i-1]=t
+FI[-1]=Minverse(p,FP[-1])
+for i in range(M-2,-1,-1) :
+    FI[i]=(FI[i+1]*(i+2))%p
+FP=[1]+FP
+FI=[1]+FI
+#########
+def C(p,a,b) :
+    return (((FP[a]*FI[a-b])%p)*FI[b])%p
+#########
 MOD=998244353
 p=7
 print(baselist_p(35,4))
