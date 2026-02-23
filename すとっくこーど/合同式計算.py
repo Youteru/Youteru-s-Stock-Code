@@ -44,7 +44,7 @@ def EFA(a,b) : #ax+by=1の解の組を1つ答える
     elif a>b :
         return [V[-2],V[-1]]
 def Minverse(p,a) : #1/a
-    return EFA(a,p)[0]%p
+    return EFA(a%p,p)[0]%p
 def Mdivide(p,a,b) : #a/b
     return (a*Minverse(p,b))%p 
 def Mpower(p,a,b) : #a**b
@@ -108,3 +108,4 @@ print(baselist_p(35,4))
 A=int(input())
 B=int(input())
 print(Mpower(p,A,B))
+
