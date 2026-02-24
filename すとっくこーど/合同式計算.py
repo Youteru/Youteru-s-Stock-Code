@@ -18,7 +18,18 @@ def gcd(a,b) :
     return AMARI[-2]
 def lcm(a,b) :
     return int(a*b/gcd(a,b))
+def sign(x) :
+    if x>0 :
+        return 1
+    elif x==0 :
+        return 0
+    else :
+        return -1
 def EFA(a,b) : #ax+by=1の解の組を1つ答える
+    c=sign(a)
+    d=sign(b)
+    a=abs(a)
+    b=abs(b)
     if a==b :
         return False
     if a==1 :
@@ -40,9 +51,9 @@ def EFA(a,b) : #ax+by=1の解の組を1つ答える
         for i in range(len(SYO)-1) :
             V.append(V[-2]-V[-1]*SYO[-i-2])
     if a<b :
-        return [V[-1],V[-2]]
+        return [c*V[-1],d*V[-2]]
     elif a>b :
-        return [V[-2],V[-1]]
+        return [c*V[-2],d*V[-1]]
 def Minverse(p,a) : #1/a
     return EFA(a%p,p)[0]%p
 def Mdivide(p,a,b) : #a/b
@@ -108,4 +119,5 @@ print(baselist_p(35,4))
 A=int(input())
 B=int(input())
 print(Mpower(p,A,B))
+
 
