@@ -1,21 +1,24 @@
 #p,a,bは32bitで表せる数の想定
 import math
 import sys
+from random import randint
 def Mplus(p,a,b) : #a+b
     return (a+b)%p
 def Mminus(p,a,b) : #a-b
     return (a-b)%p
 def Mtimes(p,a,b) : #a*b
     return (a*b)%p
+
+#間違ってないと思う、速くした。
+#gcd(|a|,|b|) ただしa=0ならb,b=0ならaを出力する。
+#wikiに載っているgcdの定義と同じ
 def gcd(a,b) :
     a=abs(a)
     b=abs(b)
-    AMARI=[]
-    AMARI.append(max([a,b]))
-    AMARI.append(min([a,b]))
-    while AMARI[-1]!=0 :
-        AMARI.append(AMARI[-2]%AMARI[-1])
-    return AMARI[-2]
+    while a>0 and b>0 :
+        b%=a
+        a,b=b,a
+    return max(a,b)
 def lcm(a,b) :
     return int(a*b/gcd(a,b))
 def sign(x) :
@@ -25,37 +28,34 @@ def sign(x) :
         return 0
     else :
         return -1
-def EFA(a,b) : #ax+by=1の解の組を1つ答える
-    c=sign(a)
-    d=sign(b)
-    a=abs(a)
-    b=abs(b)
-    if a==b :
-        return False
-    if a==1 :
-        return [1,0]
-    elif b==1 :
-        return [0,1]
-    SYO=[]
-    AMARI=[]
-    V=[1]
-    AMARI.append(max([a,b]))
-    AMARI.append(min([a,b]))
-    while AMARI[-1]!=1 and AMARI[-1]!=0 :
-        SYO.append(AMARI[-2]//AMARI[-1])
-        AMARI.append(AMARI[-2]%AMARI[-1])
-    if AMARI[-1]==0 :
-        return False
-    else :
-        V.append(-SYO[-1])
-        for i in range(len(SYO)-1) :
-            V.append(V[-2]-V[-1]*SYO[-i-2])
-    if a<b :
-        return [c*V[-1],d*V[-2]]
-    elif a>b :
-        return [c*V[-2],d*V[-1]]
+
+#高速化したもの ax+by=gcd(|a|,|b|)　を解く,a,b!=0に注意!
+def EFA(a,b) :
+    s=0
+    u=abs(b)
+    z=abs(a)
+    x=a//z
+    while z>0 :
+        s=s-(u//z)*x
+        u=u-(u//z)*z
+        x,z,s,u=s,u,x,z
+    return (s,(u-a*s)//b)
+
+#EFAを0に対応したもの,ちゃんと動くかはしらん
+def EFA2(a,b) :
+    s=0
+    u=abs(b)
+    z=abs(a)
+    x=((a<<1)+1)//((z<<1)+1)
+    if b==0 :
+        return (0,sign(b))
+    while z>0 :
+        s=s-(u//z)*x
+        u=u-(u//z)*z
+        x,z,s,u=s,u,x,z
+    return (s,(u-a*s)//b)
 def Minverse(p,a) : #1/a
-    return EFA(a%p,p)[0]%p
+    return EFA(a,p)[0]%p
 def Mdivide(p,a,b) : #a/b
     return (a*Minverse(p,b))%p 
 def Mpower(p,a,b) : #a**b
@@ -96,7 +96,7 @@ def Mfact(p,a) :
         ans=(ans*i)%p
     return ans
 #aCb計算パート
-M=10
+M=2000000
 p=998244353
 t=1
 FP=[0 for i in range(M)] # i番目はi!%p
@@ -115,9 +115,5 @@ def C(p,a,b) :
 #########
 MOD=998244353
 p=7
-print(baselist_p(35,4))
-A=int(input())
-B=int(input())
-print(Mpower(p,A,B))
 
 
