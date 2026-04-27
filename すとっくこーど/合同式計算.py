@@ -46,9 +46,9 @@ def EFA2(a,b) :
     s=0
     u=abs(b)
     z=abs(a)
-    x=((a<<1)+1)//((z<<1)+1)
+    x=max(min(1,a),-1)
     if b==0 :
-        return (sign(a),0)
+        return (x,0)
     while z>0 :
         s=s-(u//z)*x
         u=u-(u//z)*z
