@@ -43,19 +43,13 @@ def binary_max(data, upper_bound):
             left = mid
     mid = (left + right) // 2
     return mid            # 見つからなかった場合
-def compression(data) :
-    V=data.copy()
-    V=sorted(V)
-    last="^o^"
-    E=[]
-    F=[]
-    for i in range(len(V)):
-        if V[i]!=last :
-            E.append(V[i])
-        last=V[i]
-    for i in range(len(V)) :
-        F.append(binary_search(E,data[i]))
-    return  F
+def compression(A) :
+    S = sorted(list(set(A))) ## [4, 8, 25, 30, 90]
+    ranking = {x:i for i,x in enumerate(S)} ## {4: 1, 8: 2, 25: 3, 30: 4, 90: 5}
+    A_zaatsu = []
+    for a in A:
+      A_zaatsu.append(ranking[a])
+    return  A_zaatsu
 N=int(input())
 A=list(map(int,input().split()))
 Q=int(input())
