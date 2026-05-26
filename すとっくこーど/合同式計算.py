@@ -20,7 +20,7 @@ def gcd(a,b) :
         a,b=b,a
     return max(a,b)
 def lcm(a,b) :
-    return int(a*b/gcd(a,b))
+    return a*b//gcd(a,b)
 def sign(x) :
     if x>0 :
         return 1
