@@ -10,14 +10,12 @@ class SparseTable :
         self.depth = (self.n - 1).bit_length()
         self.table=init_val+[0]*(self.n*(self.depth-1))
         for d in range(self.depth-1) :
-            for i in range(self.n-(1<<d)) :
+            for i in range(self.n-(1<<(d+1))+1) :
                 self.table[(d+1)*self.n+i]=self.func(self.table[d*self.n+i],self.table[d*self.n+i+(1<<d)])
     # [l,r)でクエリ実行
     def query(self,l,r) :
-        if r-l==1 :
-            return self.table[l]
-        self.level = (r-l- 1).bit_length() - 1
-        return self.func(self.table[self.level*self.n+l], self.table[self.level*self.n+r - (1<<self.level)])
+        level = (r-l).bit_length() - 1
+        return self.func(self.table[level*self.n+l], self.table[level*self.n+r - (1<<level)])
 #ランダムテスト
 Q=50
 N=1000
