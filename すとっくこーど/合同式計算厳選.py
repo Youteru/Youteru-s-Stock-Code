@@ -88,7 +88,7 @@ for i in range(M-2,-1,-1) :
 FP=[1]+FP
 FI=[1]+FI
 #########
-def C(p,a,b) :
+def Mcom(p,a,b) :
     return (((FP[a]*FI[a-b])%p)*FI[b])%p
 #########
 MOD=998244353
