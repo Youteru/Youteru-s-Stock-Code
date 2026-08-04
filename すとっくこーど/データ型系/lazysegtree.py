@@ -1,8 +1,20 @@
 import typing
 
-import atcoder._bit
+def _ceil_pow2(n: int) -> int:
+    x = 0
+    while (1 << x) < n:
+        x += 1
+
+    return x
 
 
+def _bsf(n: int) -> int:
+    x = 0
+    while n % 2 == 0:
+        x += 1
+        n //= 2
+
+    return x
 class LazySegTree:
     def __init__(
             self,
@@ -22,7 +34,7 @@ class LazySegTree:
             v = [e] * v
 
         self._n = len(v)
-        self._log = atcoder._bit._ceil_pow2(self._n)
+        self._log = _ceil_pow2(self._n)
         self._size = 1 << self._log
         self._d = [e] * (2 * self._size)
         self._lz = [self._id] * self._size
@@ -202,3 +214,15 @@ class LazySegTree:
         self._all_apply(2 * k, self._lz[k])
         self._all_apply(2 * k + 1, self._lz[k])
         self._lz[k] = self._id
+
+#区間和、区間乗算
+def op(x,y) :
+    return x+y
+def mapping(f,x) :
+    return f*x
+def composition(f,g) :
+    return f*g
+e=0
+id_=1
+V=[1 for i in range(N-1)]
+seg=LazySegTree(op, e, mapping, composition, id_, V)
